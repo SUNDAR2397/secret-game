@@ -113,7 +113,8 @@ body {
   font-family: "Cormorant Garamond", serif; font-weight: 600;
   font-size: clamp(26px, 6vw, 32px); margin: 8px 0 6px;
 }
-.finale-q { color: var(--muted); font-size: 15px; line-height: 1.6; margin: 0 0 20px; }
+.finale-q { color: var(--muted); font-size: 15px; line-height: 1.6; margin: 0 0 10px; }
+.finale-teaser { color: var(--accent); font-size: 14px; font-weight: 500; margin: 0 0 20px; }
 #finale-form { display: flex; flex-direction: column; gap: 11px; }
 #finale-answer {
   padding: 13px 16px; border: 1px solid var(--line); border-radius: 12px;

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Our Story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Password gate -->
+  <section id="gate">
+    <div class="gate-card">
+      <div class="gate-heart">❤</div>
+      <h1>For you.</h1>
+      <p class="gate-sub">This one's private. Enter the password to open it.</p>
+      <form id="gate-form" autocomplete="off">
+        <input id="password" type="password" placeholder="Password" autocomplete="off" />
+        <button type="submit">Open our story</button>
+      </form>
+      <p id="hint" class="gate-hint"></p>
+      <p id="error" class="gate-error"></p>
+    </div>
+  </section>
+
+  <!-- Cheeky question (after password, before the letter) -->
+  <section id="quiz" hidden>
+    <div class="gate-card">
+      <div class="gate-heart">🙈</div>
+      <h1>One little question…</h1>
+      <p class="gate-sub">Before you read this — who's your favourite person right now (besides Mahesh Babu)?</p>
+      <form id="quiz-form" autocomplete="off">
+        <input id="quiz-answer" type="text" placeholder="Type your answer" autocomplete="off" />
+        <button type="submit">That's my answer</button>
+      </form>
+      <p class="gate-hint">psst… what do you call me? 👀</p>
+      <p id="quiz-msg" class="gate-error"></p>
+    </div>
+  </section>
+
+  <!-- The story (revealed after unlock) -->
+  <main id="story" hidden>
+    <header class="hero">
+      <p class="hero-kicker"></p>
+      <h1 id="story-title"></h1>
+      <p id="story-subtitle" class="hero-sub"></p>
+      <div id="counter" class="counter"></div>
+      <div class="scroll-cue">scroll ↓</div>
+    </header>
+
+    <section id="letter" class="letter"></section>
+
+    <section id="faves" class="faves" hidden></section>
+
+    <footer class="closing">
+      <div class="closing-heart">❤</div>
+    </footer>
+
+    <div id="sidewall-left" class="sidewall" aria-hidden="true"></div>
+    <div id="sidewall-right" class="sidewall sidewall-right" aria-hidden="true"></div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

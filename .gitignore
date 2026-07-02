@@ -1,0 +1,13 @@
+# GitHub Pages serves EVERY committed file publicly.
+# So we publish ONLY the encrypted payload + the code that renders it.
+# Everything else (your plaintext letter, build script, notes, photos) stays local.
+
+# Ignore everything by default...
+/*
+
+# ...except the public, safe-to-publish site files:
+!/.gitignore
+!/index.html
+!/styles.css
+!/app.js
+!/payload.js

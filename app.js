@@ -92,12 +92,47 @@ function revealStory() {
   window.scrollTo(0, 0);
 }
 
-function proceedAfterPassword() {
-  try { if (sessionStorage.getItem("oj_quiz") === "1") { revealStory(); return; } } catch (e) {}
-  const q = $("quiz");
-  if (!q) { revealStory(); return; }
-  q.hidden = false;
-  setTimeout(() => { const inp = $("quiz-answer"); if (inp) inp.focus(); }, 120);
+// ---- 20-second fireworks on the correct answer ----
+function startFireworks(durationMs) {
+  const canvas = $("fireworks");
+  if (!canvas) return;
+  canvas.hidden = false;
+  const ctx = canvas.getContext("2d");
+  const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+  resize(); window.addEventListener("resize", resize);
+  const colors = ["#c2607a", "#f3dde3", "#ffd36e", "#8ec7ff", "#ff8fab", "#ffffff"];
+  let particles = [];
+  const burst = (x, y) => {
+    const n = 45 + Math.floor(Math.random() * 30);
+    for (let i = 0; i < n; i++) {
+      const a = (Math.PI * 2 * i) / n, sp = 2 + Math.random() * 4.5;
+      particles.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 1,
+        color: colors[Math.floor(Math.random() * colors.length)] });
+    }
+  };
+  const start = performance.now();
+  let last = 0;
+  function frame(t) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (t - last > 320 && t - start < durationMs) {
+      burst(Math.random() * canvas.width, canvas.height * (0.1 + Math.random() * 0.5));
+      last = t;
+    }
+    particles.forEach((p) => {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.03; p.vx *= 0.99; p.vy *= 0.99; p.life -= 0.011;
+      ctx.globalAlpha = Math.max(p.life, 0); ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 2.6, 0, Math.PI * 2); ctx.fill();
+    });
+    particles = particles.filter((p) => p.life > 0);
+    if (t - start < durationMs || particles.length) {
+      requestAnimationFrame(frame);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      canvas.hidden = true;
+      window.removeEventListener("resize", resize);
+    }
+  }
+  requestAnimationFrame(frame);
 }
 
 function setup() {
@@ -124,7 +159,7 @@ function setup() {
       gate.style.transition = "opacity .6s ease";
       gate.style.opacity = "0";
       setTimeout(() => gate.remove(), 600);
-      proceedAfterPassword();
+      revealStory();
     } catch {
       try { sessionStorage.removeItem("oj_pw"); } catch (e) {}
       btn.disabled = false; btn.textContent = "Open our story";
@@ -134,28 +169,34 @@ function setup() {
     }
   });
 
-  // Cheeky question — she has to name her favourite person (you) to get in 😏
-  const quizForm = $("quiz-form");
-  if (quizForm) {
-    quizForm.addEventListener("submit", (ev) => {
+  // The cheeky question at the very end. Emails you whatever she types.
+  const finaleForm = $("finale-form");
+  if (finaleForm) {
+    finaleForm.addEventListener("submit", (ev) => {
       ev.preventDefault();
-      const ans = normAns($("quiz-answer").value);
-      const msg = $("quiz-msg");
+      const raw = $("finale-answer").value.trim();
+      if (!raw) return;
+      const ans = normAns(raw);
+      const msg = $("finale-msg");
       const ok = ans.includes("nana") || ans.includes("karun") || QUIZ_SIMPLE.includes(ans);
-      msg.style.color = "var(--accent)";
       if (ok) {
-        try { sessionStorage.setItem("oj_quiz", "1"); } catch (e) {}
-        msg.textContent = "🙈 okay now you've made me blush… keep reading →";
-        const q = $("quiz");
-        setTimeout(() => {
-          q.style.transition = "opacity .6s ease";
-          q.style.opacity = "0";
-          setTimeout(() => q.remove(), 600);
-          revealStory();
-        }, 1200);
+        finaleForm.style.display = "none";
+        const hintEl = document.querySelector(".finale-hint");
+        if (hintEl) hintEl.style.display = "none";
+        msg.textContent = "";
+        startFireworks(20000);
+        const ty = $("thankyou");
+        ty.hidden = false;
+        ty.innerHTML =
+          `<div class="ty-emoji">🎆</div>` +
+          `<h2>You got it 🙈❤️</h2>` +
+          `<p>Okay, now I'm the one blushing on the other side of the world.</p>` +
+          `<p class="ty-sign">Thank you, Munnu. For these two months, and for being exactly you.<br>— Karun</p>`;
+        setTimeout(() => ty.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
       } else {
+        msg.style.color = "var(--accent)";
         msg.textContent = "Nope 😌 that's not it. Hint: what do you call me?";
-        const card = $("quiz").querySelector(".gate-card");
+        const card = document.querySelector(".finale-card");
         card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
       }
     });

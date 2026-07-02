@@ -102,6 +102,45 @@ body {
 .fave-e { font-size: 19px; line-height: 1; }
 .fave-t { font-size: 14px; color: var(--ink); font-weight: 400; }
 
+/* ---------- Finale question (the very end) ---------- */
+.finale { max-width: 520px; margin: 10px auto 0; padding: 20px 24px 90px; text-align: center; }
+.finale-card {
+  background: #fff; border: 1px solid var(--line); border-radius: 20px;
+  padding: 34px 26px; box-shadow: 0 16px 44px rgba(194,96,122,.12);
+}
+.finale-emoji { font-size: 40px; }
+.finale-card h2 {
+  font-family: "Cormorant Garamond", serif; font-weight: 600;
+  font-size: clamp(26px, 6vw, 32px); margin: 8px 0 6px;
+}
+.finale-q { color: var(--muted); font-size: 15px; line-height: 1.6; margin: 0 0 20px; }
+#finale-form { display: flex; flex-direction: column; gap: 11px; }
+#finale-answer {
+  padding: 13px 16px; border: 1px solid var(--line); border-radius: 12px;
+  font-size: 16px; text-align: center; outline: none; font-family: inherit;
+}
+#finale-answer:focus { border-color: var(--accent); }
+#finale-form button {
+  padding: 13px 16px; border: none; border-radius: 12px; cursor: pointer;
+  background: var(--accent); color: #fff; font-size: 15px; font-weight: 500; font-family: inherit;
+  transition: transform .15s ease;
+}
+#finale-form button:hover { transform: translateY(-1px); }
+.finale-hint { color: var(--muted); font-size: 13px; font-style: italic; margin: 15px 0 0; }
+.finale-msg { color: var(--accent); font-size: 14px; min-height: 18px; margin: 10px 0 0; }
+
+.thankyou { margin-top: 26px; animation: rise .8s ease both; }
+.ty-emoji { font-size: 44px; }
+.thankyou h2 { font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: clamp(28px,7vw,38px); margin: 6px 0 10px; }
+.thankyou p { font-family: "Cormorant Garamond", serif; font-size: 20px; color: var(--ink); line-height: 1.5; margin: 0 0 8px; }
+.ty-sign { color: var(--accent); font-style: italic; }
+
+/* ---------- Fireworks ---------- */
+#fireworks {
+  position: fixed; inset: 0; width: 100vw; height: 100vh;
+  z-index: 40; pointer-events: none;
+}
+
 /* ---------- Side-wall ambiance (wide screens only) ---------- */
 .sidewall {
   position: fixed; top: 0; bottom: 0; left: 0; width: 130px; z-index: 1;

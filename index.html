@@ -26,20 +26,6 @@
     </div>
   </section>
 
-  <!-- Cheeky question (after password, before the letter) -->
-  <section id="quiz" hidden>
-    <div class="gate-card">
-      <div class="gate-heart">🙈</div>
-      <h1>One little question…</h1>
-      <p class="gate-sub">Before you read this — who's your favourite person right now (besides Mahesh Babu)?</p>
-      <form id="quiz-form" autocomplete="off">
-        <input id="quiz-answer" type="text" placeholder="Type your answer" autocomplete="off" />
-        <button type="submit">That's my answer</button>
-      </form>
-      <p class="gate-hint">psst… what do you call me? 👀</p>
-      <p id="quiz-msg" class="gate-error"></p>
-    </div>
-  </section>
 
   <!-- The story (revealed after unlock) -->
   <main id="story" hidden>
@@ -59,9 +45,27 @@
       <div class="closing-heart">❤</div>
     </footer>
 
+    <!-- Cheeky question — kept for the very end -->
+    <section id="finale" class="finale">
+      <div class="finale-card">
+        <div class="finale-emoji">🙈</div>
+        <h2>One last little question…</h2>
+        <p class="finale-q">Now that you've read all that... who's your favourite person right now (besides Mahesh Babu)?</p>
+        <form id="finale-form" autocomplete="off">
+          <input id="finale-answer" type="text" placeholder="Type your answer" autocomplete="off" />
+          <button type="submit">That's my answer 💛</button>
+        </form>
+        <p class="finale-hint">psst… what do you call me? 👀</p>
+        <p id="finale-msg" class="finale-msg"></p>
+      </div>
+      <div id="thankyou" class="thankyou" hidden></div>
+    </section>
+
     <div id="sidewall-left" class="sidewall" aria-hidden="true"></div>
     <div id="sidewall-right" class="sidewall sidewall-right" aria-hidden="true"></div>
   </main>
+
+  <canvas id="fireworks" hidden></canvas>
 
   <script src="app.js"></script>
 </body>
